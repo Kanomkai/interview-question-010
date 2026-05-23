@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- ── Score summary ── -->
     <div class="card" style="text-align:center;">
       <h2 style="font-size:1.4rem;margin-bottom:4px;">ผลการสอบ</h2>
       <p style="color:var(--muted);margin-bottom:24px;">{{ result.examinee }}</p>
@@ -11,9 +10,7 @@
       </div>
 
       <div style="font-size:1.15rem;font-weight:700;margin-bottom:8px;">
-        <span
-          :style="{ color: passed ? 'var(--success)' : 'var(--danger)' }"
-        >
+        <span :style="{ color: passed ? 'var(--success)' : 'var(--danger)' }">
           {{ passed ? '🎉 ผ่านการสอบ' : '❌ ไม่ผ่านการสอบ' }}
         </span>
       </div>
@@ -22,7 +19,6 @@
       </p>
     </div>
 
-    <!-- ── Answer review ── -->
     <div class="card">
       <h3 style="margin-bottom:20px;font-size:1.1rem;">เฉลยข้อสอบ</h3>
       <div
@@ -58,7 +54,6 @@
       </div>
     </div>
 
-    <!-- ── History table ── -->
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
         <h3 style="font-size:1.1rem;">ประวัติการสอบ</h3>
@@ -79,7 +74,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(r, i) in history" :key="r.id" :style="r.id === result.id ? 'background:#EFF6FF;' : ''">
+            <tr
+              v-for="(r, i) in history"
+              :key="r.id"
+              :style="r.id === result.id ? 'background:#EFF6FF;' : ''"
+            >
               <td style="color:var(--muted);">{{ i + 1 }}</td>
               <td style="font-weight:600;">{{ r.examinee }}</td>
               <td>{{ r.score }} / {{ r.total }}</td>
@@ -95,7 +94,6 @@
       </div>
     </div>
 
-    <!-- ── Retry button ── -->
     <div style="text-align:center;margin-top:8px;">
       <button class="btn btn-success" style="min-width:200px;" @click="$emit('retry')">
         🔄 สอบอีกครั้ง
@@ -114,9 +112,10 @@ const props = defineProps({
 })
 defineEmits(['retry'])
 
-const history    = ref([])
+const history     = ref([])
 const histLoading = ref(true)
 
+// Pass threshold is 60%
 const passed = computed(() => props.result.score / props.result.total >= 0.6)
 const pct    = computed(() => Math.round(props.result.score / props.result.total * 100))
 

@@ -1,14 +1,9 @@
 <template>
   <div>
-    <!-- Loading -->
     <div v-if="loading" class="spinner"></div>
-
-    <!-- Error -->
     <div v-else-if="error" class="alert alert-error">{{ error }}</div>
 
-    <!-- Form IT 10-1 -->
     <div v-else>
-      <!-- Name input -->
       <div class="card">
         <label class="field-label">ชื่อผู้สอบ <span style="color:var(--danger)">*</span></label>
         <input
@@ -19,7 +14,6 @@
         />
       </div>
 
-      <!-- Progress -->
       <div style="margin-bottom:16px;">
         <div style="display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-bottom:4px;">
           <span>ตอบแล้ว {{ answeredCount }} / {{ questions.length }} ข้อ</span>
@@ -33,7 +27,6 @@
         </div>
       </div>
 
-      <!-- Questions -->
       <div
         v-for="(q, idx) in questions"
         :key="q.id"
@@ -58,10 +51,8 @@
         </div>
       </div>
 
-      <!-- Submit error -->
       <div v-if="submitError" class="alert alert-error">{{ submitError }}</div>
 
-      <!-- Submit button -->
       <div style="text-align:center;margin-top:8px;">
         <button
           class="btn btn-primary"
@@ -83,14 +74,14 @@ import { fetchQuestions, submitExam } from '../api.js'
 
 const emit = defineEmits(['submitted'])
 
-const questions  = ref([])
-const examinee   = ref('')
-const answers    = reactive({})   // { [questionId]: choiceId }
-const loading    = ref(true)
-const error      = ref('')
-const submitting = ref(false)
+const questions   = ref([])
+const examinee    = ref('')
+const answers     = reactive({}) // { [questionId]: choiceId }
+const loading     = ref(true)
+const error       = ref('')
+const submitting  = ref(false)
 const submitError = ref('')
-const submitted  = ref(false)
+const submitted   = ref(false)
 
 const answeredCount = computed(() =>
   Object.keys(answers).filter(k => answers[k] != null).length
